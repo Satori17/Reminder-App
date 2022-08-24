@@ -8,6 +8,6 @@
 import UIKit
 
 struct Note: Codable {
-    let title: String
-    let date: String
+    var title: String
+    var date: String
 }

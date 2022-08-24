@@ -61,7 +61,7 @@ class NoteFileManager {
     
     func getAllDirectories() throws -> [String] {
         do {
-            let directories = try manager.contentsOfDirectory(at: mainDirectory(), includingPropertiesForKeys: nil)
+            let directories = try manager.contentsOfDirectory(at: mainDirectory(), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
             let categories = directories.map({ $0.lastPathComponent })
             
             return categories
@@ -86,22 +86,29 @@ class NoteFileManager {
     
     func addNote(atPath path: String, onDate date: Date, withTitle title: String) throws {
         let notePath = try mainDirectory().appendingPathComponent(path).appendingPathComponent("\(title).json")
-        let notesDictionary = ["title" : title, "date" : setupDate(onTime: date)]
+        let note = Note(title: title, date: setupDate(onTime: date))
         let encoder = JSONEncoder()
-        guard let data = try? encoder.encode(notesDictionary) else { throw FileManagerError.encodingError }
+        guard let data = try? encoder.encode(note) else { throw FileManagerError.encodingError }
         manager.createFile(atPath: notePath.path, contents: data)
     }
     
     
-    func editNote(fromDirectory directory: String, atName: String, toName: String) {
+    func editNote(fromDirectory directory: String, atName: String, toName: String, onDate date: Date) throws {
         do {
-            let notePath = try mainDirectory().appendingPathComponent(directory)
+            let mainDirectory = try mainDirectory().appendingPathComponent(directory)
+            let notePath = mainDirectory.appendingPathComponent("\(atName).json")
             
-            let oldPath = notePath.appendingPathComponent("\(atName).json")
-            let newPath = notePath.appendingPathComponent("\(toName).json")
-            try manager.moveItem(at: oldPath, to: newPath)
+            let editedNote = Note(title: toName, date: setupDate(onTime: date))
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let JsonData = try encoder.encode(editedNote)
+            try JsonData.write(to: notePath)
+            //changing file name 
+            let newPath = mainDirectory.appendingPathComponent("\(toName).json")
+            try manager.moveItem(atPath: notePath.path, toPath: newPath.path)
+            
         } catch {
-            print(FileManagerError.filePathError)
+            throw FileManagerError.filePathError
         }
         
     }

@@ -91,20 +91,13 @@ extension NotesViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    //Edit
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let currentNote = self.allNotes[indexPath.row]
-        AlertManager.shared.AddAlert(onVC: self, title: .note, message: nil, placeholder: .note) { text in
-            do {
-                guard let directoryPath = self.directoryPath else { throw FileManagerError.filePathError }
-                NoteFileManager.shared.editNote(fromDirectory: directoryPath, atName: currentNote.noteTitle, toName: text)
-            } catch {
-                AlertManager.shared.errorAlert(onVC: self, withMessage: "Couldn't edit note")
-            }
-        }
+        router?.routeToEdit(note: currentNote)
     }
     
-    //Edit
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         true
     }

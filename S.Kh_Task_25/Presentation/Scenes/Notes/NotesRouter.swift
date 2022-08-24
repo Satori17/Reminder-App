@@ -14,13 +14,13 @@ import UIKit
 
 protocol NotesRoutingLogic {
     func routeToAddNote(segue: UIStoryboardSegue?)
+    func routeToEdit(note: NoteViewModel)
 }
 
 
 class NotesRouter {
     weak var viewController: NotesViewController?
-    private var segueIdentifier = "addNote"
-    
+    private let segueIdentifier = "addNote"
 }
 
 
@@ -33,6 +33,17 @@ extension NotesRouter: NotesRoutingLogic {
                 self.viewController?.fetchNotes()
                 self.viewController?.notesTableView.reloadData()
             }
+        }
+    }
+    
+    func routeToEdit(note: NoteViewModel) {
+        if let destinationVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddNoteViewController") as? AddNoteViewController {
+            destinationVC.directoryPath = viewController?.directoryPath
+            destinationVC.currentNote = note
+            destinationVC.reloadNotesHandler = {
+                self.viewController?.fetchNotes()
+            }
+            viewController?.present(destinationVC, animated: true)
         }
     }
     

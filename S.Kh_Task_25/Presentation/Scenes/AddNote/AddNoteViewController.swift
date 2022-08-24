@@ -21,6 +21,7 @@ class AddNoteViewController: UIViewController {
     //MARK: - Vars
     
     var directoryPath: String?
+    var currentNote: NoteViewModel?
     var reloadNotesHandler: (() -> Void)?
     
     //MARK: - View Lifecycle
@@ -38,7 +39,12 @@ class AddNoteViewController: UIViewController {
             AlertManager.shared.errorAlert(onVC: self, withMessage: "Please type note description")
             return
         }
-        saveHelper(path: directoryPath, date: noteDatePicker.date, title: noteText)
+        //check if we're editing or adding note
+        if let currentNote = currentNote {
+            editHelper(path: directoryPath, currentTitle: currentNote.noteTitle, newTitle: noteText, date: noteDatePicker.date)
+        } else {
+            saveHelper(path: directoryPath, date: noteDatePicker.date, title: noteText)
+        }
         reloadNotesHandler?()
         self.dismiss(animated: true)
     }
@@ -50,6 +56,14 @@ class AddNoteViewController: UIViewController {
             try NoteFileManager.shared.addNote(atPath: path, onDate: date, withTitle: title)
         } catch {
             AlertManager.shared.errorAlert(onVC: self, withMessage: "Error. Please, try again")
+        }
+    }
+    
+    private func editHelper(path: String, currentTitle: String, newTitle: String, date: Date) {
+        do {
+            try NoteFileManager.shared.editNote(fromDirectory: path, atName: currentTitle, toName: newTitle, onDate: date)
+        } catch {
+            AlertManager.shared.errorAlert(onVC: self, withMessage: "Couldn't edit note")
         }
     }
     
