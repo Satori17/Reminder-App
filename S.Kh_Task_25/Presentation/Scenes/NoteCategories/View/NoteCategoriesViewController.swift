@@ -27,6 +27,7 @@ class NoteCategoriesViewController: UIViewController {
     var interactor: NoteCategoriesBusinessLogic?
     var router: NoteCategoriesRoutingLogic?
     var categoryNames = [String]()
+    var isNotificationEnabled = true
     
     // MARK: View lifecycle
     
@@ -40,7 +41,8 @@ class NoteCategoriesViewController: UIViewController {
         //registering cell
         noteCategoriesTableView.registerNib(class: CategoryCell.self)
         fetchNoteCategories()
-    }    
+        isNotificationEnabled ? print("Access Granted") : AlertManager.shared.notificationDeniedAlert(onVC: self, withMessage: "Please, enable Notifications in the Settings app to receive reminder notifications")
+    }
     
     //MARK: - IBAction
     
@@ -69,13 +71,13 @@ class NoteCategoriesViewController: UIViewController {
             AlertManager.shared.errorAlert(onVC: self, withMessage: "Error. Please, try again")
         }
     }
-   
+    
 }
 
 //MARK: - Display Logic Protocol
 
 extension NoteCategoriesViewController: NoteCategoriesDisplayLogic {
-        
+    
     func display(categories: [String]) {
         categoryNames = categories
     }

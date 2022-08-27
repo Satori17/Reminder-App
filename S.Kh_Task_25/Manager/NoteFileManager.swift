@@ -60,14 +60,18 @@ class NoteFileManager {
     }
     
     func getAllDirectories() throws -> [String] {
+        var allCategories = [String]()
         do {
-            let directories = try manager.contentsOfDirectory(at: mainDirectory(), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-            let categories = directories.map({ $0.lastPathComponent })
-            
-            return categories
+            if manager.fileExists(atPath: try mainDirectory().path) {
+                let directories = try manager.contentsOfDirectory(at: mainDirectory(), includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                allCategories = directories.map({ $0.lastPathComponent })
+                return allCategories
+            }
         } catch {
             throw FileManagerError.filePathError
         }
+        
+        return allCategories
     }
     
     func removeDirectory(atPath path: String) throws {

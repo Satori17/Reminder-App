@@ -21,9 +21,9 @@ class NotesViewController: UIViewController {
     
     //MARK: - IBOutlets
     
-    @IBOutlet weak var addNoteBtn: UIButton! {
+    @IBOutlet weak var addReminderBtn: UIButton! {
         didSet {
-            addNoteBtn.layer.cornerRadius = 10
+            addReminderBtn.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var notesTableView: UITableView!

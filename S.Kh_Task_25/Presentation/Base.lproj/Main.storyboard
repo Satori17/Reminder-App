@@ -67,7 +67,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Add Note">
+                                <state key="normal" title="Add Reminder">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -96,7 +96,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="addNoteBtn" destination="azb-Lf-Ctq" id="Gsy-xB-2lf"/>
+                        <outlet property="addReminderBtn" destination="azb-Lf-Ctq" id="Gsy-xB-2lf"/>
                         <outlet property="notesTableView" destination="VR4-Z2-vC1" id="hSm-Cb-6hE"/>
                     </connections>
                 </viewController>
@@ -153,7 +153,7 @@
                     <connections>
                         <outlet property="noteDatePicker" destination="o1x-Il-Fds" id="HnL-2o-44b"/>
                         <outlet property="noteTextField" destination="UD3-BP-9se" id="1jl-qf-ff3"/>
-                        <outlet property="saveNoteBtn" destination="DLC-6n-vhj" id="Hzk-Jt-JhJ"/>
+                        <outlet property="saveReminderBtn" destination="DLC-6n-vhj" id="Hzk-Jt-JhJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Dp-El-5bI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

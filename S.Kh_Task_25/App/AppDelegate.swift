@@ -13,7 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        application.applicationIconBadgeNumber -= 1
+        //UIWindow didn't work here (even with adding var window: UIWindow?), go to SceneDelegate
         return true
     }
 

@@ -26,7 +26,6 @@ enum NoteModel {
         struct DisplayedNotes {
             let noteTitle: String
             let noteDate: String
-            
         }
     }
     

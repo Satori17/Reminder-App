@@ -46,4 +46,16 @@ class AlertManager {
         vc.present(alert, animated: true)
     }
     
+    func notificationDeniedAlert(onVC vc: UIViewController, withMessage message: String) {
+        let alert = UIAlertController(title: "Notifications Denied", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { action in
+            if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsUrl)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        vc.present(alert, animated: true)
+    }
+    
 }

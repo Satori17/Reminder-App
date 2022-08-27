@@ -12,9 +12,9 @@ class AddNoteViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet weak var noteTextField: UITextField!
     @IBOutlet weak var noteDatePicker: UIDatePicker!
-    @IBOutlet weak var saveNoteBtn: UIButton! {
+    @IBOutlet weak var saveReminderBtn: UIButton! {
         didSet {
-            saveNoteBtn.layer.cornerRadius = 10
+            saveReminderBtn.layer.cornerRadius = 10
         }
     }
     
@@ -45,6 +45,7 @@ class AddNoteViewController: UIViewController {
         } else {
             saveHelper(path: directoryPath, date: noteDatePicker.date, title: noteText)
         }
+        NotificationManager.shared.createNotification(withName: noteText, duration: noteDatePicker.date)
         reloadNotesHandler?()
         self.dismiss(animated: true)
     }
